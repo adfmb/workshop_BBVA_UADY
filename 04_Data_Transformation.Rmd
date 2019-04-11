@@ -1,0 +1,22 @@
+---
+title: ""
+output:
+  html_notebook:
+    df_print: paged
+  html_document:
+    df_print: paged
+---
+
+# <a><img src='www/bbva_uady02.png' align="right" height="139" /></a>
+   . <br/>
+
+# Lets meet a very good guy: *`dplyr`*
+
+- [Go to him](https://github.com/tidyverse/dplyr/blob/master/README.md)
+
+- [The best place to start](https://r4ds.had.co.nz/transform.html)
+
+## Cheatsheet
+
+<a href="https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf"><img src="https://raw.githubusercontent.com/rstudio/cheatsheets/master/pngs/thumbnails/data-transformation-cheatsheet-thumbs.png" width="630" height="252"/></a>  
+
