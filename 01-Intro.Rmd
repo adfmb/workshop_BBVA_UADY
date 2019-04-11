@@ -1,0 +1,73 @@
+---
+title: ""
+output:
+  html_notebook:
+    df_print: paged
+  html_document:
+    df_print: paged
+description: In this chapter, you will take your first steps with R. You will learn
+  how to use the console as a calculator and how to assign variables. You will also
+  get to know the basic data types in R. Let's get started!
+---
+# <a><img src='www/bbva_uady02.png' align="right" height="139" /></a>
+   . <br/>
+
+# Intro to Basics
+
+## R
+```{r}
+mpg
+```
+
+```{r}
+mean(mpg$hwy)
+```
+
+
+```{r}
+summary(mean(mpg$hwy))
+```
+
+
+```{r}
+table(mpg$class)
+```
+
+
+```{r}
+qplot(displ,hwy,data=mpg,color=class)
+```
+
+
+```{r}
+lm(hwy~displ,data=mpg)
+```
+
+## RStudio
+
+### Dashboards
+
+- [crandash](https://gallery.shinyapps.io/087-crandash/)
+
+
+- [genome browser](https://gallery.shinyapps.io/genome_browser/)
+
+- [Tool Supply & Demand](https://gallery.shinyapps.io/TSupplyDemand/)
+
+- [Integrales Montecarlo](https://alfr0d0.shinyapps.io/Integrales_Montecarlo/)
+
+- [Importance Sampling - Exponential Family](https://alfr0d0.shinyapps.io/ImportanceSampling_ExponentialFamily/)
+
+- [Quiniela Rusia 2018](https://alfr0d0.shinyapps.io/quiniela_registro/)
+
+- [Information Value](https://alfr0d0.shinyapps.io/infval02/)
+
+
+### What we'll use in this workshop: **RMarkdown**
+
+- [Markdown Basics](https://rmarkdown.rstudio.com/authoring_basics.html)
+
+- [More Markdown Basics](https://markdown-guide.readthedocs.io/en/latest/basics.html)
+```{r}
+
+```
