@@ -1,7 +1,7 @@
 Workshop BBVA UADY
 ===============================================
 
-# <a><img src='www/bbva_uady02.png' align="right" height="139" /></a>
+# <a><img src='www/bbva_uady02.png' align="left" height="139" /></a>
 
 <br/> 
 
@@ -11,7 +11,6 @@ Workshop BBVA UADY
 
 |What We'll Do|
 |-------------|
-||
 
 Sharing a little bit of the tools we use at the office as part of our data science process helping us mainly by our awesome friend **R** and the amazing pal **Git**
 
