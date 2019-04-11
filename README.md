@@ -1,7 +1,7 @@
 Workshop BBVA UADY
 ===============================================
 
-# <a><img src='www/bbva_uady02.png' align="left" height="250"  width="1200" /></a>
+# <a><img src='www/bbva_uady02.png' align="left" height="230"  width="1000" /></a>
 
 <br/> 
 
