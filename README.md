@@ -1,6 +1,19 @@
-workshop_BBVA_UADY
+Workshop BBVA UADY
 ===============================================
-Knowing a little bit about our awesome friend **R** helping us by our amazing pal **Git**
+
+# <a><img src='www/bbva_uady02.png' align="right" height="139" /></a>
+
+<br/> 
+
+# <a></a>
+
+<br/>  
+
+|What We'll Do|
+|-------------|
+||
+
+Sharing a little bit of the tools we use at the office as part of our data science process helping us mainly by our awesome friend **R** and the amazing pal **Git**
 
 # First steps
 
@@ -66,6 +79,7 @@ repo-class      https://github.com/adfmb/workshop_BBVA_UADY.git (push)
 ## References
 
 **Thanks so much to this incredible smart guys for all their wisdom which I've been collected for this project:**
+
 - [Intro *by rstudio*](https://github.com/rstudio/Intro)
 
 - [courses-intro-to-r *by datacamp*](https://github.com/datacamp/courses-intro-to-r)
