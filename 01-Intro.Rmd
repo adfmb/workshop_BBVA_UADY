@@ -68,6 +68,11 @@ lm(hwy~displ,data=mpg)
 - [Markdown Basics](https://rmarkdown.rstudio.com/authoring_basics.html)
 
 - [More Markdown Basics](https://markdown-guide.readthedocs.io/en/latest/basics.html)
+
+<br/> 
+
+<a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf"><img src="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf" width="1000" height="350"/></a> 
+
 ```{r}
 
 ```
