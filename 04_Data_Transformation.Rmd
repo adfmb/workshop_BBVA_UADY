@@ -56,7 +56,7 @@ variables.
 
 
 ```{r}
-source("script_mns.R")
+#source("script_mns.R")
 # library("nycflights13")
 # saveRDS(flights,"data/flights.rds")
 # saveRDS(airlines,"data/airlines.rds")
@@ -67,12 +67,12 @@ source("script_mns.R")
 
 ```{r}
 flights<-readRDS("data/flights.rds")
-airlines<-readRDS("data/airlines.rds")
 flights
 ```
 
 ### **`select`**
 ```{r}
+library(dplyr)
 # Drop unimportant variables so it's easier to understand the join results.
 flights %>% select(year:day, hour, origin, dest, tailnum, carrier)
 ```
@@ -84,21 +84,25 @@ flights %>% mutate(I_tarde=if_else(arr_delay>0,1,0))
 ```
 
 ```{r}
-flights%>%select(sched_arr_time,arr_time,arr_delay)%>%mutate(I_tarde=if_else(arr_delay>0,1,0))
+#que lindo detalle
+flights%>%
+  select(sched_arr_time,arr_time,arr_delay)%>%
+  mutate(I_tarde=if_else(arr_delay>0,1,0))
 ```
 
 ### **`arrange`**
 ```{r}
-flights %>% arrange(year)
+flights%>%arrange(year)
 ```
 ```{r}
-flights %>% arrange(year,month,day)
+flights%>%
+  arrange(year,month,day)
 ```
 ```{r}
 flights%>%
   select(year,month,sched_dep_time,sched_arr_time,arr_time,arr_delay)%>%
   mutate(I_tarde=if_else(arr_delay>0,1,0))%>%
-  arrange(desc(year),desc(month),sched_dep_time,desc(I_tarde))
+  arrange(desc(month),sched_dep_time,desc(I_tarde))
 ```
 
 ### **`filter`**
@@ -117,6 +121,10 @@ flights%>%
 ```{r}
 flights2<-flights%>%
   mutate(I_tarde=if_else(arr_delay>0,1,0))
+
+# is.na(flights2$I_tarde)
+
+
 sum(is.na(flights2$I_tarde)); print(paste0("The 'NA's represent the: ", round(sum(is.na(flights2$I_tarde))/nrow(flights2),4)*100,"% of the Universe"))
 ```
 
@@ -127,6 +135,8 @@ flights2%>%
 
 *Option 1: Take them out of here*
 ```{r}
+# flights2[!is.na(flights2$I_tarde),]
+
 flights2_opt1<-flights2%>%
   filter(!is.na(I_tarde))
 
@@ -143,7 +153,7 @@ flights2_opt2; sum(is.na(flights2_opt2$I_tarde)); print(paste0("The 'NA's repres
 
 *Option N & beyond: More sophisticated stuff*
 ```{r}
-print(important_mens)
+# print(important_mens)
 ```
 
 ## Grouped operations
@@ -163,17 +173,68 @@ flights2_opt2%>%
 flights2_opt2%>%
   group_by(year,month,day)%>%
   mutate(n_flights=n()#,
-         # idrow=row_number()
-         )#%>%
-  # arrange(year,month,day)%>%
-  # select(year,month,day,n_flights,idrow)%>%
-  # filter(row_number()==1) 
+         #idrow=row_number()
+         )%>%
+  arrange(year,month,day)%>%
+  select(year,month,day,n_flights)%>%
+  filter(row_number()==1)
   
 ```
+```{r}
+flights2_opt2%>%
+  group_by(year,month,day)%>%
+  mutate(n_flights=n()#,
+         #idrow=row_number()
+         )%>%
+  arrange(year,month,day)%>%
+  
+  # select(year,month,day,n_flights)%>%
+  filter(row_number()==1)%>%
+  ungroup()%>%
+  select(arr_delay,n_flights)
+  
 ```
 
 
+```{r}
+flights2_opt2%>%
+  group_by(year,month,day)%>%
+  summarise(n_flights=n())
+  
+```
 
+
+```{r}
+airlines<-readRDS("data/airlines.rds")
+airlines
+```
+
+## Two-table
+[Let's go for some joins](https://dplyr.tidyverse.org/articles/two-table.html)
+
+```{r}
+airlines<-readRDS("data/airlines.rds")
+airlines
+```
+
+- Getting the Airlines' names
+```{r}
+flights_w_names<-flights2_opt2%>%
+  left_join(airlines,by = c("carrier" = "carrier"))
+
+flights_w_names
+```
+
+## Distribution of flights by Airline for Profe Lalo's homework
+
+```{r}
+flights_w_names%>%
+  group_by(name)%>%
+  summarise(num_vuelos=n(),
+            porc_vuelos=round(num_vuelos/nrow(.),4)
+            )%>%
+  arrange(desc(porc_vuelos))
+```
 
 
 
@@ -188,7 +249,5 @@ flights2_opt2%>%
 
 <a href="https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf"><img src="https://raw.githubusercontent.com/rstudio/cheatsheets/master/pngs/thumbnails/data-transformation-cheatsheet-thumbs.png" width="630" height="252"/></a>  
 
-## Two-table
-[Let's go for some joins](https://dplyr.tidyverse.org/articles/two-table.html)
 
 
