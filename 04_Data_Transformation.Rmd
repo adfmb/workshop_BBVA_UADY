@@ -10,7 +10,9 @@ output:
 # <a><img src='www/bbva_uady02.png' align="right" height="139" /></a>
    . <br/>
 
-# Lets meet a very good guy: *`dplyr`*
+#Chatting with our data
+
+** Lets meet a very nice guy: *`dplyr`* **
 
 - [Go to him](https://github.com/tidyverse/dplyr/blob/master/README.md)
 
@@ -19,4 +21,46 @@ output:
 ## Cheatsheet
 
 <a href="https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf"><img src="https://raw.githubusercontent.com/rstudio/cheatsheets/master/pngs/thumbnails/data-transformation-cheatsheet-thumbs.png" width="630" height="252"/></a>  
+
+
+- Maybe, the most of our time, will be spent on `talking to our data`
+
+- One of the most important type of words on our languages are the `verbs`
+
+- This make sense because they `execute actions`, and that is what we'll want
+
+- We are going to need `take` some *variable* and `make` a new one from it
+
+- Perhaps, there are going to be sometimes when we would like to know the possible cases that would come from the combination of two categorical variables and calculate the frequency of each scenario (`distribution`) and even` resume` the information than'd come from it
+
+- Another times, we'd just need to `order` our dataset from some specific variable or variables in order to watch the `biggest` (or the `smallest`) ones at above (or at the bottom)
+
+- And finally what we'd want to *tell* our data is that we only want to see those cases (*rows*) than would fulfill some `condition`
+
+
+
+
+
+
+
+
+
+[Let's go for some joins](https://dplyr.tidyverse.org/articles/two-table.html)
+
+
+
+
+```{r}
+library("nycflights13")
+flights
+```
+
+```{r}
+# Drop unimportant variables so it's easier to understand the join results.
+flights2 <- flights %>% select(year:day, hour, origin, dest, tailnum, carrier)
+
+flights2 %>% 
+  left_join(airlines)
+```
+
 
