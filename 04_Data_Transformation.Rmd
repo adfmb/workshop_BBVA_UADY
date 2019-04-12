@@ -14,6 +14,172 @@ output:
 
 ** Lets meet a very nice guy: *`dplyr`* **
 
+- Maybe, the most of our time, will be spent on `talking to our data`
+
+- One of the most important type of words on our languages are the `verbs`
+
+- This make sense because they `execute actions`, and that is what we'll want
+
+1. We are going to need `take` some *variable* 
+
+2. and `make` a new one from it
+
+3. Perhaps, there are going to be sometimes when we would like to know the possible cases that would come from the combination of two categorical variables and calculate the frequency of each scenario (`distribution`) and even` resume` the information than'd come from it
+
+4.  Another times, we'd just need to `order` our dataset from some specific variable or variables in order to watch the `biggest` (or the `smallest`) ones at above (or at the bottom)
+
+5. And finally what we'd want to *tell* our data is that we only want to see those cases (*rows*) than would fulfill some `condition`
+
+
+## So, translating ...
+
+**Quoting from - [*dplyr's github*](https://github.com/tidyverse/dplyr/blob/master/README.md):**
+
+dplyr is a grammar of data manipulation, providing a consistent set of
+verbs that help you solve the most common data manipulation challenges:
+
+  
+1. `select()` picks variables based on their names.
+
+2. `mutate()` adds new variables that are functions of existing
+variables.
+
+3. `summarise()` reduces multiple values down to a single summary.
+
+4. `arrange()` changes the ordering of the rows.
+
+5. `filter()` picks cases based on their values.
+
+
+
+
+
+
+```{r}
+source("script_mns.R")
+# library("nycflights13")
+# saveRDS(flights,"data/flights.rds")
+# saveRDS(airlines,"data/airlines.rds")
+# library(tidyverse)
+# mpg
+
+```
+
+```{r}
+flights<-readRDS("data/flights.rds")
+airlines<-readRDS("data/airlines.rds")
+flights
+```
+
+### **`select`**
+```{r}
+# Drop unimportant variables so it's easier to understand the join results.
+flights %>% select(year:day, hour, origin, dest, tailnum, carrier)
+```
+
+
+### **`mutate`**
+```{r}
+flights %>% mutate(I_tarde=if_else(arr_delay>0,1,0))
+```
+
+```{r}
+flights%>%select(sched_arr_time,arr_time,arr_delay)%>%mutate(I_tarde=if_else(arr_delay>0,1,0))
+```
+
+### **`arrange`**
+```{r}
+flights %>% arrange(year)
+```
+```{r}
+flights %>% arrange(year,month,day)
+```
+```{r}
+flights%>%
+  select(year,month,sched_dep_time,sched_arr_time,arr_time,arr_delay)%>%
+  mutate(I_tarde=if_else(arr_delay>0,1,0))%>%
+  arrange(desc(year),desc(month),sched_dep_time,desc(I_tarde))
+```
+
+### **`filter`**
+```{r}
+flights%>%
+  filter(sched_dep_time<1200)
+```
+
+```{r}
+flights%>%
+  select(year,month,sched_dep_time,sched_arr_time,arr_time,arr_delay)%>%
+  mutate(I_tarde=if_else(arr_delay>0,1,0))%>%
+  filter(sched_dep_time>=0001 & sched_dep_time<600 & I_tarde==1) 
+```
+
+```{r}
+flights2<-flights%>%
+  mutate(I_tarde=if_else(arr_delay>0,1,0))
+sum(is.na(flights2$I_tarde)); print(paste0("The 'NA's represent the: ", round(sum(is.na(flights2$I_tarde))/nrow(flights2),4)*100,"% of the Universe"))
+```
+
+```{r}
+flights2%>%
+  filter(is.na(I_tarde))
+```
+
+*Option 1: Take them out of here*
+```{r}
+flights2_opt1<-flights2%>%
+  filter(!is.na(I_tarde))
+
+flights2_opt1
+```
+
+*Option 2: Special Value*
+```{r}
+flights2_opt2<-flights2%>%
+  mutate(I_tarde=if_else(is.na(I_tarde),-9999,I_tarde))
+
+flights2_opt2; sum(is.na(flights2_opt2$I_tarde)); print(paste0("The 'NA's represent the: ", round(sum(is.na(flights2_opt2$I_tarde))/nrow(flights2_opt2),4)*100,"% of the Universe")); sum(flights2_opt2$I_tarde==-9999); print(paste0("The Special Values represent the: ", round(sum(flights2_opt2$I_tarde==-9999)/nrow(flights2_opt2),4)*100,"% of the Universe"))
+```
+
+*Option N & beyond: More sophisticated stuff*
+```{r}
+print(important_mens)
+```
+
+## Grouped operations
+
+### **`group_by`**
+
+- Counting number of flights per day
+
+```{r}
+flights2_opt2%>%
+  group_by(year,month,day)%>%
+  mutate(n_flights=n())
+```
+
+
+```{r}
+flights2_opt2%>%
+  group_by(year,month,day)%>%
+  mutate(n_flights=n()#,
+         # idrow=row_number()
+         )#%>%
+  # arrange(year,month,day)%>%
+  # select(year,month,day,n_flights,idrow)%>%
+  # filter(row_number()==1) 
+  
+```
+```
+
+
+
+
+
+
+
+#References
+
 - [Go to him](https://github.com/tidyverse/dplyr/blob/master/README.md)
 
 - [The best place to start](https://r4ds.had.co.nz/transform.html)
@@ -22,45 +188,7 @@ output:
 
 <a href="https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf"><img src="https://raw.githubusercontent.com/rstudio/cheatsheets/master/pngs/thumbnails/data-transformation-cheatsheet-thumbs.png" width="630" height="252"/></a>  
 
-
-- Maybe, the most of our time, will be spent on `talking to our data`
-
-- One of the most important type of words on our languages are the `verbs`
-
-- This make sense because they `execute actions`, and that is what we'll want
-
-- We are going to need `take` some *variable* and `make` a new one from it
-
-- Perhaps, there are going to be sometimes when we would like to know the possible cases that would come from the combination of two categorical variables and calculate the frequency of each scenario (`distribution`) and even` resume` the information than'd come from it
-
-- Another times, we'd just need to `order` our dataset from some specific variable or variables in order to watch the `biggest` (or the `smallest`) ones at above (or at the bottom)
-
-- And finally what we'd want to *tell* our data is that we only want to see those cases (*rows*) than would fulfill some `condition`
-
-
-
-
-
-
-
-
-
+## Two-table
 [Let's go for some joins](https://dplyr.tidyverse.org/articles/two-table.html)
-
-
-
-
-```{r}
-library("nycflights13")
-flights
-```
-
-```{r}
-# Drop unimportant variables so it's easier to understand the join results.
-flights2 <- flights %>% select(year:day, hour, origin, dest, tailnum, carrier)
-
-flights2 %>% 
-  left_join(airlines)
-```
 
 
